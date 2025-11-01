@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error 404 - Página No Encontrada | Noticias.lat</title>
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <script src="app.js" defer></script>
+</head>
+<body>
+
+<header class="main-header">
+        <nav class="container">
+            <a href="index.html" class="logo">Noticias.lat</a>
+            
+            <ul class="nav-links desktop-menu">
+                <li><a href="index.html?categoria=todos" class="nav-link" data-categoria="todos">General</a></li>
+                <li><a href="index.html?categoria=deportes" class="nav-link" data-categoria="deportes">Deportes</a></li>
+                <li><a href="index.html?categoria=tecnologia" class="nav-link" data-categoria="tecnologia">Tecnología</a></li>
+                <li><a href="index.html?categoria=entretenimiento" class="nav-link" data-categoria="entretenimiento">Show</a></li>
+                
+                <li class="dropdown">
+                    <a href="#" class="nav-link">Países <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="index.html?pais=ar" class="nav-link" data-pais="ar">🇦🇷 Argentina</a></li>
+                        <li><a href="index.html?pais=mx" class="nav-link" data-pais="mx">🇲🇽 México</a></li>
+                        <li><a href="index.html?pais=co" class="nav-link" data-pais="co">🇨🇴 Colombia</a></li>
+                        <li><a href="index.html?pais=cl" class="nav-link" data-pais="cl">🇨🇱 Chile</a></li>
+                        <li><a href="index.html?pais=pe" class="nav-link" data-pais="pe">🇵🇪 Perú</a></li>
+                        <li><a href="index.html?pais=py" class="nav-link" data-pais="py">🇵🇾 Paraguay</a></li>
+                    </ul>
+                </li>
+                <li><a href="sobre-nosotros.html" class="nav-link" data-categoria="sobre-nosotros">Sobre Nosotros</a></li>
+                <li><a href="contacto.html" class="nav-link" data-categoria="contacto">Contacto</a></li>
+            </ul>
+
+            <button id="menu-toggle" class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <div id="mobile-menu" class="mobile-menu">
+        <button id="menu-close" class="menu-close">&times;</button>
+        
+        <a href="index.html?categoria=todos" class="nav-link" data-categoria="todos">General (Todo)</a>
+        <a href="index.html?categoria=deportes" class="nav-link" data-categoria="deportes">Deportes</a>
+        <a href="index.html?categoria=tecnologia" class="nav-link" data-categoria="tecnologia">Tecnología</a>
+        <a href="index.html?categoria=entretenimiento" class="nav-link" data-categoria="entretenimiento">Show</a>
+        
+        <hr>
+        
+        <a href="index.html?pais=ar" class="nav-link" data-pais="ar">🇦🇷 Argentina</a>
+        <a href="index.html?pais=mx" class="nav-link" data-pais="mx">🇲🇽 México</a>
+        <a href="index.html?pais=co" class="nav-link" data-pais="co">🇨🇴 Colombia</a>
+        <a href="index.html?pais=cl" class="nav-link" data-pais="cl">🇨🇱 Chile</a>
+        <a href="index.html?pais=pe" class="nav-link" data-pais="pe">🇵🇪 Perú</a>
+        <a href="index.html?pais=py" class="nav-link" data-pais="py">🇵🇾 Paraguay</a>
+        
+        <hr>
+        <a href="sobre-nosotros.html" class="nav-link" data-categoria="sobre-nosotros">Sobre Nosotros</a>
+        <a href="contacto.html" class="nav-link" data-categoria="contacto">Contacto</a>
+    </div>
+
+    <main class="container">
+        <div class="static-page-container" style="text-align: center; max-width: 600px; padding: 4rem 2rem;">
+            <h1 style="font-size: 5rem; color: var(--color-primario-hover); margin-bottom: 0;">404</h1>
+            <h2 style="font-size: 2rem; margin-top: 0; margin-bottom: 2rem; color: var(--color-texto-principal);">Página no encontrada</h2>
+            <p style="font-size: 1.15rem; color: var(--color-texto-secundario); margin-bottom: 3rem;">
+                Lo sentimos, la URL que intentaste acceder no existe en nuestro portal. Es posible que el enlace haya expirado o que se haya movido el contenido.
+            </p>
+            <a href="index.html?categoria=todos" class="btn-primary" style="text-decoration: none;">
+                <i class="fas fa-home"></i> Volver a la página principal
+            </a>
+            <p style="margin-top: 3rem; font-size: 0.9rem; color: var(--color-texto-secundario);">
+                Si crees que esto es un error del sistema, por favor <a href="contacto.html">contáctanos</a>.
+            </p>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container footer-content">
+            <div class="footer-section about">
+                <h3>Noticias.lat</h3>
+                <p>El portal de noticias líder de la red LFAF Tech, comprometido con la información veraz y al instante.</p>
+            </div>
+            <div class="footer-section links">
+                <h4>Enlaces Rápidos</h4>
+                <ul>
+                    <li><a href="index.html?categoria=todos">Última Hora</a></li>
+                    <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-section links-legal">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="politica-privacidad.html">Política de Privacidad</a></li>
+                    <li><a href="terminos.html">Términos y Condiciones</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2024 Noticias.lat | Una plataforma de <a href="https://lfaftech.com" target="_blank">LFAF Tech</a>
+        </div>
+    </footer>
+
+</body>
+</html>

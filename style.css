@@ -1,0 +1,672 @@
+/* ============================================= */
+/* --- NOTICIAS.LAT REDISEÑO v2.0 (La Visión) --- */
+/* ============================================= */
+
+/* --- 1. VARIABLES Y RESET GLOBAL --- */
+:root {
+    --color-primario: #007bff; /* Un azul profesional y moderno */
+    --color-primario-hover: #0056b3;
+    --color-texto-principal: #212529; /* Negro suave */
+    --color-texto-secundario: #6c757d; /* Gris para metadatos */
+    --color-fondo: #f8f9fa; /* Gris muy claro para el body */
+    --color-tarjeta: #ffffff; /* Blanco puro para tarjetas/header */
+    --borde-suave: #e9ecef; /* Borde muy sutil */
+    
+    --fuente-principal: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --fuente-titulos: "Georgia", "Times New Roman", serif;
+    
+    --ancho-maximo: 1200px;
+    --sombra-suave: 0 4px 12px rgba(0,0,0,0.05);
+    --sombra-fuerte: 0 5px 15px rgba(0,0,0,0.1);
+    --radio-borde: 8px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--fuente-principal);
+    background-color: var(--color-fondo);
+    color: var(--color-texto-principal);
+    line-height: 1.6;
+    
+    /* --- ¡CORRECCIÓN CLAVE! --- */
+    /* Evita el desplazamiento horizontal causado por elementos que desbordan */
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: var(--ancho-maximo);
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+a {
+    color: var(--color-primario);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--color-primario-hover);
+    text-decoration: underline;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ============================================= */
+/* --- 2. HEADER Y NAVEGACIÓN (MOBILE-FIRST) --- */
+/* ============================================= */
+.main-header {
+    background-color: var(--color-tarjeta);
+    border-bottom: 1px solid var(--borde-suave);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--sombra-suave);
+}
+
+.main-header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--color-texto-principal);
+    font-family: var(--fuente-principal);
+}
+.logo:hover {
+    text-decoration: none;
+    color: var(--color-primario);
+}
+
+/* --- Botón de Menú Móvil (Hamburguesa) --- */
+.menu-toggle {
+    display: block; /* Visible en móvil por defecto */
+    background: none;
+    border: none;
+    color: var(--color-texto-principal);
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+/* --- Menú de Escritorio (Oculto en móvil) --- */
+.nav-links {
+    display: none; /* Oculto en móvil */
+    list-style: none;
+    gap: 1.5rem;
+}
+
+.nav-links a {
+    color: var(--color-texto-secundario);
+    font-weight: 600;
+    padding: 0.5rem;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-bottom 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--color-primario);
+    border-bottom: 2px solid var(--color-primario);
+    text-decoration: none;
+}
+
+/* --- Dropdown de Países (Escritorio) --- */
+.nav-links .dropdown {
+    position: relative;
+}
+
+.nav-links .dropdown > a .fa-chevron-down {
+    font-size: 0.7rem;
+    margin-left: 5px;
+}
+
+.nav-links .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--color-tarjeta);
+    border: 1px solid var(--borde-suave);
+    border-radius: 0 0 var(--radio-borde) var(--radio-borde);
+    min-width: 200px;
+    list-style: none;
+    z-index: 101;
+    box-shadow: var(--sombra-fuerte);
+}
+
+.nav-links .dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.nav-links .dropdown-menu a {
+    display: block;
+    padding: 0.75rem 1.25rem;
+    color: var(--color-texto-secundario);
+    border-bottom: none;
+    width: 100%;
+}
+
+.nav-links .dropdown-menu a:hover {
+    background-color: var(--color-fondo);
+    color: var(--color-primario);
+}
+
+/* --- Menú Lateral Móvil (Deslizante) --- */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -300px; /* Oculto fuera de pantalla */
+    width: 300px;
+    height: 100%;
+    background-color: var(--color-tarjeta);
+    box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+    z-index: 1001;
+    transition: transform 0.3s ease-in-out;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-menu.active {
+    transform: translateX(-300px); /* Se desliza a la vista */
+}
+
+.menu-close {
+    background: none;
+    border: none;
+    color: var(--color-texto-principal);
+    font-size: 2.5rem;
+    cursor: pointer;
+    text-align: right;
+    margin-bottom: 1rem;
+}
+
+.mobile-menu a {
+    color: var(--color-texto-principal);
+    font-size: 1.2rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--borde-suave);
+    font-weight: 500;
+}
+.mobile-menu a:hover {
+    color: var(--color-primario);
+    text-decoration: none;
+}
+.mobile-menu hr {
+    border: 0;
+    border-top: 1px solid var(--borde-suave);
+    margin: 1rem 0;
+}
+
+/* ============================================= */
+/* --- 3. CONTENIDO PRINCIPAL Y TARJETAS --- */
+/* ============================================= */
+.main-content {
+    padding: 2rem 0;
+}
+
+/* --- ESTILOS PARA LA BÚSQUEDA --- */
+.search-form {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    padding: 0 0 1rem 0;
+    border-bottom: 1px solid var(--borde-suave);
+    position: relative;
+    max-width: 600px; 
+    
+    /* --- ¡CORRECCIÓN CLAVE! CENTRADO EN PC --- */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.search-form input[type="text"] {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: 1px solid var(--borde-suave);
+    border-radius: var(--radio-borde);
+    font-size: 1rem;
+    transition: border-color 0.2s;
+    background-color: var(--color-tarjeta);
+    color: var(--color-texto-principal);
+}
+
+.search-form input[type="text"]:focus {
+    border-color: var(--color-primario);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.search-form button {
+    background-color: var(--color-primario);
+    color: var(--color-tarjeta);
+    border: none;
+    border-radius: var(--radio-borde);
+    cursor: pointer;
+    padding: 10px 15px;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+    flex-shrink: 0;
+}
+
+.search-form button:hover {
+    background-color: var(--color-primario-hover);
+}
+
+#clear-search-button {
+    background-color: var(--color-texto-secundario);
+}
+
+#clear-search-button:hover {
+    background-color: #495057; /* Un gris más oscuro */
+}
+
+@media (max-width: 767px) {
+    .search-form {
+        margin-bottom: 1.5rem;
+        /* Quitamos el centrado automático en móvil si la barra ocupa todo el ancho */
+        margin-left: 0; 
+        margin-right: 0;
+    }
+    .search-form input[type="text"] {
+        padding: 8px 12px;
+        font-size: 0.95rem;
+    }
+}
+/* --- FIN ESTILOS BÚSQUEDA --- */
+
+
+#category-title {
+    font-size: 2rem;
+    font-family: var(--fuente-principal);
+    font-weight: 700;
+    border-bottom: 3px solid var(--color-primario);
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    margin-bottom: 2rem;
+    color: var(--color-texto-principal);
+}
+
+/* --- Contenedor de Artículos (Grid) --- */
+#articles-container {
+    display: grid;
+    /* Responsive: 1 columna en móvil, auto-fit en desktop */
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+/* --- Tarjeta de Artículo (Rediseño) --- */
+.article-card {
+    background-color: var(--color-tarjeta);
+    border: 1px solid var(--borde-suave);
+    border-radius: var(--radio-borde);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--sombra-suave);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.article-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--sombra-fuerte);
+}
+
+.article-card a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.article-card img {
+    width: 100%;
+    height: 200px; /* Altura fija para uniformidad */
+    object-fit: cover;
+    border-bottom: 1px solid var(--borde-suave);
+}
+
+.article-card-content {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Empuja el footer hacia abajo */
+}
+
+.article-card-content h3 {
+    margin: 0;
+    font-size: 1.25rem; /* Más grande y legible */
+    line-height: 1.4;
+    font-family: var(--fuente-principal);
+    font-weight: 600;
+    color: var(--color-texto-principal);
+}
+
+.article-card-content h3 a:hover {
+    color: var(--color-primario);
+    text-decoration: none;
+}
+
+.article-card-content p {
+    font-size: 0.95rem;
+    color: var(--color-texto-secundario);
+    flex-grow: 1; /* Ocupa el espacio disponible */
+    margin: 0.75rem 0;
+}
+
+.article-card-footer {
+    font-size: 0.85rem;
+    color: var(--color-texto-secundario);
+    padding-top: 1rem;
+    margin-top: 1rem;
+    border-top: 1px solid var(--borde-suave);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* --- Loader (Spinner) --- */
+.loader-container {
+    text-align: center;
+    padding: 4rem 0;
+    grid-column: 1 / -1; /* Ocupa todo el grid */
+}
+.loader {
+    border: 6px solid var(--color-fondo);
+    border-top: 6px solid var(--color-primario);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ============================================= */
+/* --- 4. PÁGINA DE ARTÍCULO Y ESTÁTICAS --- */
+/* ============================================= */
+.article-page-container,
+.static-page-container {
+    background-color: var(--color-tarjeta);
+    padding: 1.5rem;
+    border-radius: var(--radio-borde);
+    margin: 2rem auto;
+    max-width: 900px; /* Ancho de lectura cómodo */
+    box-shadow: var(--sombra-suave);
+}
+
+.article-page-container h1,
+.static-page-container h1 {
+    font-size: 2.2rem; /* Título grande */
+    font-family: var(--fuente-titulos);
+    color: var(--color-texto-principal);
+    line-height: 1.3;
+    margin-bottom: 1rem;
+}
+
+.static-page-container h2 {
+    font-family: var(--fuente-titulos);
+    color: var(--color-texto-principal);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.static-page-container p,
+.static-page-container li {
+    margin-bottom: 1rem;
+    color: var(--color-texto-secundario);
+    font-size: 1.05rem;
+}
+.static-page-container ul { padding-left: 20px; }
+
+/* --- Estilos para el Artículo (IA) --- */
+.article-meta {
+    font-size: 0.9rem;
+    color: var(--color-texto-secundario);
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--borde-suave);
+    padding-bottom: 1.5rem;
+}
+
+.article-main-image {
+    width: 100%;
+    border-radius: var(--radio-borde);
+    margin-bottom: 2rem;
+}
+
+.article-body {
+    margin: 2rem 0;
+}
+.article-body p {
+    font-size: 1.15rem; /* ¡CLAVE! Tamaño grande para leer */
+    color: var(--color-texto-principal);
+    line-height: 1.7; /* ¡CLAVE! Espaciado amplio */
+    margin-bottom: 1.5rem;
+    font-family: var(--fuente-titulos); /* Fuente Serif para lectura larga */
+}
+
+.article-source-link {
+    margin-top: 2.5rem;
+    padding: 1.5rem;
+    background-color: var(--color-fondo);
+    border-radius: var(--radio-borde);
+    text-align: center;
+    border: 1px solid var(--borde-suave);
+}
+.article-source-link p {
+    color: var(--color-texto-secundario);
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.btn-primary {
+    display: inline-block;
+    padding: 12px 24px;
+    border: none;
+    border-radius: var(--radio-borde);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    text-align: center;
+    background-color: var(--color-primario);
+    color: var(--color-tarjeta);
+}
+.btn-primary:hover {
+    background-color: var(--color-primario-hover);
+    text-decoration: none;
+    color: var(--color-tarjeta);
+}
+
+/* ============================================= */
+/* --- 5. PAGINACIÓN --- */
+/* ============================================= */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 3rem;
+}
+
+.page-link {
+    color: var(--color-primario);
+    background-color: var(--color-tarjeta);
+    border: 1px solid var(--borde-suave);
+    padding: 0.6rem 1.1rem;
+    border-radius: var(--radio-borde);
+    font-weight: 600;
+}
+
+.page-link:hover {
+    background-color: var(--color-primario);
+    color: var(--color-tarjeta);
+    border-color: var(--color-primario);
+    text-decoration: none;
+}
+
+.page-link.active {
+    background-color: var(--color-primario);
+    color: var(--color-tarjeta);
+    border-color: var(--color-primario);
+    cursor: default;
+}
+
+/* ============================================= */
+/* --- 6. SECCIÓN DE RECOMENDADOS --- */
+/* ============================================= */
+#recommended-section {
+    border-top: 1px solid var(--borde-suave);
+    margin-top: 3rem;
+    padding-top: 2rem;
+}
+
+#recommended-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.articles-container-mini {
+    display: grid;
+    grid-template-columns: 1fr; /* 1 columna en móvil */
+    gap: 1rem;
+}
+
+.articles-container-mini .article-card {
+    background-color: var(--color-fondo); /* Fondo sutil */
+}
+.articles-container-mini .article-card img { height: 150px; }
+.articles-container-mini .article-card-content { padding: 1rem; }
+.articles-container-mini .article-card-content h3 { font-size: 1.1rem; }
+.articles-container-mini .article-card-content p { display: none; }
+.articles-container-mini .article-card-footer { display: none; }
+
+/* ============================================= */
+/* --- 7. FOOTER --- */
+/* ============================================= */
+.main-footer {
+    background-color: var(--color-texto-principal);
+    color: #adb5bd; /* Gris claro para texto de footer */
+    margin-top: 3rem;
+    padding-top: 2.5rem;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 1fr; /* 1 columna en móvil */
+    gap: 2rem;
+    padding: 0 1rem;
+}
+
+.footer-section h3,
+.footer-section h4 {
+    color: var(--color-tarjeta);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.footer-section p {
+    color: #adb5bd;
+}
+
+.footer-section ul { list-style: none; }
+.footer-section li { margin-bottom: 0.5rem; }
+.footer-section a { color: #adb5bd; }
+.footer-section a:hover {
+    color: var(--color-tarjeta);
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 1.5rem 0;
+    margin-top: 2rem;
+    background-color: #1a1e21; /* Un poco más oscuro */
+    border-top: 1px solid #343a40;
+    color: #adb5bd;
+    font-size: 0.9rem;
+}
+
+/* ============================================= */
+/* --- 8. RESPONSIVE DESIGN (BREAKPOINTS) --- */
+/* ============================================= */
+
+/* --- Tabletas --- */
+@media (min-width: 768px) {
+    .container {
+        padding: 0 2rem;
+    }
+    
+    #articles-container {
+        /* 2 columnas en tabletas */
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .articles-container-mini {
+        /* 2 columnas para recomendados */
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer-content {
+        /* 3 columnas en tabletas */
+        grid-template-columns: 2fr 1fr 1fr;
+    }
+
+    .article-page-container,
+    .static-page-container {
+        padding: 2.5rem;
+    }
+
+    .article-page-container h1,
+    .static-page-container h1 {
+        font-size: 2.8rem; /* Título más grande */
+    }
+}
+
+/* --- Escritorio --- */
+@media (min-width: 992px) {
+    #articles-container {
+        /* 3 columnas en escritorio */
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .articles-container-mini {
+        /* 4 columnas para recomendados */
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    /* --- Intercambio de Menús --- */
+    .desktop-menu {
+        display: flex; /* Muestra el menú de escritorio */
+    }
+    .menu-toggle {
+        display: none; /* Oculta el botón de hamburguesa */
+    }
+    .mobile-menu {
+        display: none; /* Oculta el menú deslizante */
+    }
+}
+
+/* --- Escritorio Grande --- */
+@media (min-width: 1200px) {
+    #articles-container {
+        /* Mantenemos 3 columnas pero con más espacio */
+        gap: 2rem;
+    }
+}
