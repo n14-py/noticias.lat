@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const articleContainer = document.getElementById('article-content');
     const loadingMessage = document.getElementById('loading-message');
     
-    // Detener si no estamos en articulo.html (aunque este script solo se carga allí)
+    // Detener si no estamos en articulo.html
     if (!articleContainer) {
         return; 
     }
@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     const card = document.createElement('div');
                     card.className = 'article-card';
                     
-                    // --- ¡LÓGICA DE IMAGEN DE RESPALDO AÑADIDA! ---
                     const imagenUrl = article.imagen || PLACEHOLDER_IMG;
                     
                     card.innerHTML = `
@@ -77,11 +76,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (loadingMessage) loadingMessage.style.display = 'none';
             
             // ===========================================
-            // --- ¡LÓGICA DE SEO/OPEN GRAPH ACTUALIZADA! ---
+            // --- 1. LÓGICA DE SEO/OPEN GRAPH (METATAGS) ---
             // ===========================================
             const currentUrl = `${window.location.origin}${window.location.pathname}?id=${article._id}`;
             const descriptionSnippet = (article.descripcion || 'Sin descripción').substring(0, 150) + '...';
-            const imageUrl = article.imagen || PLACEHOLDER_IMG; // ¡Respaldo aquí!
+            const imageUrl = article.imagen || PLACEHOLDER_IMG;
             
             // 1. Título de la pestaña
             document.title = `${article.titulo} - Noticias.lat`;
@@ -96,19 +95,60 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('og-title').setAttribute('content', article.titulo);
             document.getElementById('og-description').setAttribute('content', descriptionSnippet);
             document.getElementById('og-url').setAttribute('content', currentUrl);
-            document.getElementById('og-image').setAttribute('content', imageUrl); // ¡Usa la URL con respaldo!
+            document.getElementById('og-image').setAttribute('content', imageUrl);
 
             // 4. Link Canónico (Para evitar contenido duplicado en SEO)
             const canonicalLink = document.getElementById('canonical-link');
             if (canonicalLink) {
                  canonicalLink.setAttribute('href', currentUrl);
             }
-            // ===========================================
-            // --- FIN DE LÓGICA SEO/OG ---
-            // ===========================================
 
+            // ===========================================
+            // --- 2. ¡NUEVO! DATOS ESTRUCTURADOS (SCHEMA.ORG) ---
+            // ===========================================
+            
+            // Eliminar el schema anterior si existe (para navegación SPA, si se implementa)
+            const oldSchema = document.getElementById('article-schema');
+            if (oldSchema) {
+                oldSchema.remove();
+            }
 
-            // Lógica de contenido: priorizar el artículo generado por IA
+            // Crear el objeto Schema
+            const schema = {
+                "@context": "https://schema.org",
+                "@type": "NewsArticle",
+                "headline": article.titulo,
+                "image": [
+                    imageUrl // Usa la imagen con placeholder
+                 ],
+                "datePublished": article.fecha, // Fecha de creación
+                "dateModified": article.updatedAt || article.fecha, // Fecha de actualización (o creación)
+                "author": [{
+                    "@type": "Organization",
+                    "name": "Noticias.lat"
+                }],
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Noticias.lat",
+                    "logo": {
+                        "@type": "ImageObject",
+                        "url": "https.www.noticias.lat/favicon.png" // URL del logo/favicon
+                    }
+                },
+                "description": descriptionSnippet
+            };
+
+            // Crear la etiqueta script y añadirla al <head>
+            const schemaScript = document.createElement('script');
+            schemaScript.type = 'application/ld+json';
+            schemaScript.id = 'article-schema';
+            schemaScript.text = JSON.stringify(schema);
+            document.head.appendChild(schemaScript);
+            
+            // ===========================================
+            // --- 3. LÓGICA DE CONTENIDO HTML ---
+            // ===========================================
+            
             let contenidoPrincipalHTML = '';
 
             if (article.articuloGenerado) {
@@ -133,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             }
 
-            // --- ¡HTML FINAL (CON IMAGEN DE RESPALDO)! ---
+            // --- HTML FINAL (Usando la estructura Article Page) ---
             const mainImageUrl = article.imagen || PLACEHOLDER_IMG;
             
             articleContainer.innerHTML = `
@@ -156,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
             
-            // Llamamos a los recomendados
+            // --- 4. LLAMAR A RECOMENDADOS ---
             fetchRecommended(article.sitio, article.categoria, article._id);
 
         } catch (error) {
