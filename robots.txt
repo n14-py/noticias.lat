@@ -1,12 +1,7 @@
-# Permite que todos los rastreadores (Google, Bing, etc.) visiten el sitio.
+# /NOTICIAS.LAT/robots.txt
+
 User-agent: *
 Allow: /
 
-# (Opcional: Si tuvieras una carpeta /admin/ o /privado/ que no quieres que Google vea,
-# la bloquearías así:)
-# Disallow: /admin/
-
-# ¡LO MÁS IMPORTANTE!
-# Le decimos a Google dónde encontrar nuestro sitemap dinámico.
-# Asegúrate de que esta URL sea la correcta de tu API en producción.
-Sitemap: https://lfaftechapi.onrender.com/api/sitemap.xml
+# Apuntamos a la nueva URL "proxy" en nuestro propio dominio
+Sitemap: https://www.noticias.lat/sitemap.xml
