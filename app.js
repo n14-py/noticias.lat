@@ -1,46 +1,80 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- 1. LÓGICA DEL MENÚ MÓVIL (Sin cambios, ya era funcional) ---
+    // --- 1. LÓGICA DEL MENÚ MÓVIL (NUEVO) ---
     const menuToggle = document.getElementById('menu-toggle');
     const menuClose = document.getElementById('menu-close');
     const mobileMenu = document.getElementById('mobile-menu');
+    const overlay = document.getElementById('overlay');
 
-    if (menuToggle && mobileMenu) {
+    if (menuToggle && mobileMenu && overlay) {
         menuToggle.addEventListener('click', () => {
             mobileMenu.classList.add('active');
+            overlay.classList.add('active');
         });
     }
-    if (menuClose && mobileMenu) {
-        menuClose.addEventListener('click', () => {
-            mobileMenu.classList.remove('active');
+
+    const closeMenu = () => {
+        mobileMenu.classList.remove('active');
+        overlay.classList.remove('active');
+    };
+
+    if (menuClose && mobileMenu && overlay) {
+        menuClose.addEventListener('click', closeMenu);
+        overlay.addEventListener('click', closeMenu);
+    }
+    
+    // Cierra el menú móvil si se hace clic en un enlace
+    if (mobileMenu) {
+        mobileMenu.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', closeMenu);
         });
     }
+
 
     // --- 2. CONFIGURACIÓN E INICIALIZACIÓN ---
     const articlesContainer = document.getElementById('articles-container');
     
+    // Si no estamos en index.html, detenemos el script
     if (!articlesContainer) {
         return; 
     }
 
+    // --- ¡IMPORTANTE! Reemplaza esto si tu API está en otro lugar ---
     const API_URL = 'https://lfaftechapi.onrender.com'; 
     const SITIO = 'noticias.lat';
     const LIMITE_POR_PAGINA = 12;
+    const PLACEHOLDER_IMG = 'images/placeholder.jpg'; // Imagen de respaldo
 
     const loadingMessage = document.getElementById('loading-message');
     const categoryTitle = document.getElementById('category-title');
     const paginationContainer = document.getElementById('pagination-container');
     const navLinks = document.querySelectorAll('.nav-link');
     
-    // Elementos de Búsqueda
     const searchInput = document.getElementById('search-input');
     const searchForm = document.getElementById('search-form');
     const clearSearchButton = document.getElementById('clear-search-button');
 
-    // Mapeo de códigos de país a banderas para la visualización
+    // --- ¡MAPA COMPLETO DE 19 PAÍSES! ---
     const BANDERAS = {
-        ar: '🇦🇷 Argentina', mx: '🇲🇽 México', co: '🇨🇴 Colombia',
-        cl: '🇨🇱 Chile', pe: '🇵🇪 Perú', py: '🇵🇾 Paraguay'
+        ar: '🇦🇷 Argentina', bo: '🇧🇴 Bolivia', br: '🇧🇷 Brasil',
+        cl: '🇨🇱 Chile', co: '🇨🇴 Colombia', cr: '🇨🇷 Costa Rica',
+        cu: '🇨🇺 Cuba', ec: '🇪🇨 Ecuador', sv: '🇸🇻 El Salvador',
+        gt: '🇬🇹 Guatemala', hn: '🇭🇳 Honduras', mx: '🇲🇽 México',
+        ni: '🇳🇮 Nicaragua', pa: '🇵🇦 Panamá', py: '🇵🇾 Paraguay',
+        pe: '🇵🇪 Perú', do: '🇩🇴 Rep. Dominicana', uy: '🇺🇾 Uruguay',
+        ve: '🇻🇪 Venezuela'
+    };
+    
+    // --- ¡MAPA DE 8 CATEGORÍAS! ---
+    const CATEGORIAS_TITULOS = {
+        todos: 'Última Hora (General)',
+        politica: 'Política',
+        economia: 'Economía',
+        deportes: 'Deportes',
+        tecnologia: 'Tecnología',
+        entretenimiento: 'Show y Entretenimiento',
+        salud: 'Salud',
+        internacional: 'Mundo'
     };
 
 
@@ -52,39 +86,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getUrlParams() {
         const params = new URLSearchParams(window.location.search);
-        // ¡NUEVO! Capturamos el término de búsqueda
         const query = params.get('query') || null; 
-        
-        // Si hay búsqueda, ignoramos la categoría/país para no tener conflictos en la API
         const pais = query ? null : (params.get('pais') || null);
-        const categoria = query ? 'todos' : (params.get('categoria') || 'todos');
+        // Si hay 'query' o 'pais', 'categoria' se ignora (todos)
+        const categoria = (query || pais) ? 'todos' : (params.get('categoria') || 'todos');
         const pagina = parseInt(params.get('pagina')) || 1;
         
         return { query, pais, categoria, pagina };
     }
 
     function updateActiveCategory(query, categoria, pais) {
-        let titulo = "Última Hora (General)"; 
+        let titulo = CATEGORIAS_TITULOS['todos']; 
         
         if (query) {
-            titulo = `Resultados de búsqueda para: "${query}"`;
-            searchInput.value = query; // Rellenar el input
-            clearSearchButton.style.display = 'inline-block'; // Mostrar botón de limpiar
+            titulo = `Resultados de búsqueda: "${query}"`;
+            if (searchInput) searchInput.value = query;
+            if (clearSearchButton) clearSearchButton.style.display = 'inline-block';
         } else {
-            clearSearchButton.style.display = 'none';
-            searchInput.value = '';
+            if (clearSearchButton) clearSearchButton.style.display = 'none';
+            if (searchInput) searchInput.value = '';
 
             let activeKey = pais || categoria;
             
-            if (pais) {
+            // Título para País
+            if (pais && BANDERAS[pais]) {
                 titulo = `Noticias de ${BANDERAS[pais]}`;
-            } else {
-                if (categoria === 'deportes') titulo = "Deportes";
-                if (categoria === 'tecnologia') titulo = "Tecnología";
-                if (categoria === 'entretenimiento') titulo = "Show y Entretenimiento";
+            } 
+            // Título para Categoría
+            else if (categoria && CATEGORIAS_TITULOS[categoria]) {
+                titulo = CATEGORIAS_TITULOS[categoria];
             }
 
-            // Activar enlace de navegación
+            // Marcar el enlace activo
             navLinks.forEach(link => {
                 link.classList.remove('active');
                 if (link.dataset.categoria === activeKey || link.dataset.pais === activeKey) {
@@ -93,48 +126,64 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         
-        categoryTitle.textContent = titulo;
+        if (categoryTitle) categoryTitle.textContent = titulo;
     }
 
     function buildPagination(paginaActual, totalPaginas, categoria, pais, query) {
-        paginationContainer.innerHTML = ''; 
-        if (totalPaginas <= 1) return;
+        if (paginationContainer) paginationContainer.innerHTML = ''; 
+        if (totalPaginas <= 1 || !paginationContainer) return;
 
-        // Si hay búsqueda, el query string es solo el query. Si no, es categoría o país.
-        let queryString = query ? `query=${query}` : (pais ? `pais=${pais}` : `categoria=${categoria}`);
-        
-        // Lógica de 7 botones (implementada en el paso anterior)
-        let startPage = Math.max(1, paginaActual - 3);
-        let endPage = Math.min(totalPaginas, paginaActual + 3);
-
-        if (paginaActual <= 4) endPage = Math.min(totalPaginas, 7);
-        if (paginaActual > totalPaginas - 3) startPage = Math.max(1, totalPaginas - 6);
-
-        // Botón Anterior
-        if (paginaActual > 1) {
-            paginationContainer.innerHTML += `<a href="index.html?${queryString}&pagina=${paginaActual - 1}" class="page-link">Anterior</a>`;
+        let queryString = '';
+        if (query) {
+            queryString = `query=${encodeURIComponent(query)}`;
+        } else if (pais) {
+            queryString = `pais=${pais}`;
+        } else {
+            queryString = `categoria=${categoria}`;
         }
         
-        // Elipses y botón 1
+        // Botón "Anterior"
+        if (paginaActual > 1) {
+            paginationContainer.innerHTML += `<a href="index.html?${queryString}&pagina=${paginaActual - 1}" class="page-link" aria-label="Anterior">Anterior</a>`;
+        } else {
+            paginationContainer.innerHTML += `<span class="page-link disabled" aria-disabled="true">Anterior</span>`;
+        }
+
+        // --- Lógica de "..." ---
+        let startPage = Math.max(1, paginaActual - 2);
+        let endPage = Math.min(totalPaginas, paginaActual + 2);
+
+        if (paginaActual <= 3) {
+            endPage = Math.min(totalPaginas, 5);
+        }
+        if (paginaActual > totalPaginas - 3) {
+            startPage = Math.max(1, totalPaginas - 4);
+        }
+
         if (startPage > 1) {
             paginationContainer.innerHTML += `<a href="index.html?${queryString}&pagina=1" class="page-link">1</a>`;
-            if (startPage > 2) paginationContainer.innerHTML += `<span class="page-link" style="border:none;">...</span>`;
+            if (startPage > 2) {
+                paginationContainer.innerHTML += `<span class="page-ellipsis">...</span>`;
+            }
         }
 
-        // Números centrales
         for (let i = startPage; i <= endPage; i++) {
             paginationContainer.innerHTML += `<a href="index.html?${queryString}&pagina=${i}" class="page-link ${i === paginaActual ? 'active' : ''}">${i}</a>`;
         }
 
-        // Elipses y botón final
         if (endPage < totalPaginas) {
-            if (endPage < totalPaginas - 1) paginationContainer.innerHTML += `<span class="page-link" style="border:none;">...</span>`;
+            if (endPage < totalPaginas - 1) {
+                paginationContainer.innerHTML += `<span class="page-ellipsis">...</span>`;
+            }
             paginationContainer.innerHTML += `<a href="index.html?${queryString}&pagina=${totalPaginas}" class="page-link">${totalPaginas}</a>`;
         }
+        // --- Fin Lógica "..." ---
 
-        // Botón Siguiente
+        // Botón "Siguiente"
         if (paginaActual < totalPaginas) {
-            paginationContainer.innerHTML += `<a href="index.html?${queryString}&pagina=${paginaActual + 1}" class="page-link">Siguiente</a>`;
+            paginationContainer.innerHTML += `<a href="index.html?${queryString}&pagina=${paginaActual + 1}" class="page-link" aria-label="Siguiente">Siguiente</a>`;
+        } else {
+            paginationContainer.innerHTML += `<span class="page-link disabled" aria-disabled="true">Siguiente</span>`;
         }
     }
 
@@ -143,22 +192,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const { query, categoria, pais, pagina } = getUrlParams();
         updateActiveCategory(query, categoria, pais);
 
-        // Limpiamos y mostramos el loader
-        articlesContainer.innerHTML = '';
-        loadingMessage.style.display = 'block';
-        paginationContainer.innerHTML = ''; // Limpiamos la paginación
+        if (articlesContainer) articlesContainer.innerHTML = '';
+        if (loadingMessage) loadingMessage.style.display = 'block';
+        if (paginationContainer) paginationContainer.innerHTML = ''; 
 
         try {
             let url = `${API_URL}/api/articles?sitio=${SITIO}&limite=${LIMITE_POR_PAGINA}&pagina=${pagina}`;
             
-            // Lógica de filtros: query tiene prioridad sobre país/categoría
             if (query) {
-                url += `&query=${query}`;
+                url += `&query=${encodeURIComponent(query)}`;
             } else if (pais) {
                 url += `&pais=${pais}`;
-            } else {
+            } else if (categoria !== 'todos') { // Solo añade categoría si NO es 'todos'
                 url += `&categoria=${categoria}`;
             }
+            // Si es 'todos' (y no hay query ni pais), no añade filtro, trayendo todo.
 
             const response = await fetch(url);
             
@@ -167,37 +215,50 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
             const articles = data.articulos;
 
-            // Ocultamos el loader
-            loadingMessage.style.display = 'none';
-            articlesContainer.innerHTML = ''; 
+            if (loadingMessage) loadingMessage.style.display = 'none';
+
+            if (!articlesContainer) return; // Doble chequeo
 
             if (articles.length === 0) {
                 const message = query 
                     ? `No se encontraron resultados para "${query}".`
                     : 'No se encontraron noticias en esta sección.';
-                articlesContainer.innerHTML = `<p style="grid-column: 1 / -1; text-align: center; color: var(--color-texto-secundario); padding: 4rem 0;">${message}</p>`;
+                articlesContainer.innerHTML = `<p class="no-articles-message">${message}</p>`;
             } else {
                 
                 articles.forEach(article => {
                     const card = document.createElement('div');
                     card.className = 'article-card';
 
-                    // Lógica de Bandera
+                    // --- LÓGICA DE BANDERA Y FUENTE ---
                     let infoFuente = `<span>Fuente: ${article.fuente}</span>`;
+                    let flagHTML = '';
                     if (article.pais && BANDERAS[article.pais]) {
                         const bandera = BANDERAS[article.pais].split(' ')[0]; 
                         infoFuente = `<span>${bandera} ${article.fuente}</span>`;
+                        flagHTML = `<span class="article-card-flag">${bandera}</span>`;
                     }
                     
+                    // --- LÓGICA DE DESCRIPCIÓN (Ocultar si no existe) ---
+                    let descripcionHTML = '';
+                    if (article.descripcion && article.descripcion !== 'Sin descripción.') {
+                        descripcionHTML = `<p>${article.descripcion.substring(0, 120)}...</p>`;
+                    }
+                    
+                    // --- LÓGICA DE IMAGEN (Placeholder) ---
+                    const imagenUrl = article.imagen || PLACEHOLDER_IMG;
+                    
                     card.innerHTML = `
-                        <a href="articulo.html?id=${article._id}">
-                            <img src="${article.imagen}" alt="${article.titulo}" loading="lazy">
+                        <a href="articulo.html?id=${article._id}" class="article-card-image-link">
+                            <img src="${imagenUrl}" alt="${article.titulo}" loading="lazy" 
+                                 onerror="this.onerror=null;this.src='${PLACEHOLDER_IMG}';">
+                            ${flagHTML}
                         </a>
                         <div class="article-card-content">
                             <h3>
                                 <a href="articulo.html?id=${article._id}">${article.titulo}</a>
                             </h3>
-                            <p>${article.descripcion.substring(0, 120)}...</p>
+                            ${descripcionHTML}
                             <div class="article-card-footer">
                                 ${infoFuente}
                                 <span>${formatDate(article.fecha)}</span>
@@ -212,21 +273,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
             console.error('Error al cargar las noticias:', error);
-            articlesContainer.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: red; padding: 4rem 0;">Error al cargar las noticias. Intente recargar la página.</p>';
+            if (loadingMessage) loadingMessage.style.display = 'none';
+            if (articlesContainer) articlesContainer.innerHTML = '<p class="no-articles-message" style="color: red;">Error al cargar las noticias. Intente recargar la página.</p>';
         }
     }
     
     // --- 5. EVENT LISTENERS PARA BÚSQUEDA ---
-    
-    // El formulario ya funciona por defecto (al usar method="GET" y name="query"), 
-    // pero podemos añadir un listener para prevenir el envío y forzar el uso de JS si fuera necesario.
-    // Lo dejaremos simple:
-    
-    // Al hacer clic en "Limpiar Búsqueda"
-    clearSearchButton.addEventListener('click', () => {
-        window.location.href = 'index.html?categoria=todos'; // Volver a la página principal/general
-    });
+    if (searchForm) {
+        searchForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const query = searchInput.value.trim();
+            if (query) {
+                // Redirige a la página de búsqueda
+                window.location.href = `index.html?query=${encodeURIComponent(query)}`;
+            }
+        });
+    }
 
-    // Inicia la carga de noticias
+    if (clearSearchButton) {
+        clearSearchButton.addEventListener('click', () => {
+            // Limpia la búsqueda y vuelve a 'General'
+            window.location.href = 'index.html?categoria=todos'; 
+        });
+    }
+
+    // --- INICIAR LA CARGA ---
     fetchNews();
 });

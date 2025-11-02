@@ -2,10 +2,11 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-width=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Términos y Condiciones - Noticias.lat</title>
     
     <link rel="stylesheet" href="style.css">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     
     <script src="app.js" defer></script>
@@ -13,57 +14,96 @@
 <body>
 
 <header class="main-header">
-        <nav class="container">
-            <a href="index.html" class="logo">Noticias.lat</a>
-            
-            <ul class="nav-links desktop-menu">
-                <li><a href="index.html?categoria=todos" class="nav-link" data-categoria="todos">General</a></li>
-                <li><a href="index.html?categoria=deportes" class="nav-link" data-categoria="deportes">Deportes</a></li>
-                <li><a href="index.html?categoria=tecnologia" class="nav-link" data-categoria="tecnologia">Tecnología</a></li>
-                <li><a href="index.html?categoria=entretenimiento" class="nav-link" data-categoria="entretenimiento">Show</a></li>
-                
-                <li class="dropdown">
-                    <a href="#" class="nav-link">Países <i class="fas fa-chevron-down"></i></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="index.html?pais=ar" class="nav-link" data-pais="ar">🇦🇷 Argentina</a></li>
-                        <li><a href="index.html?pais=mx" class="nav-link" data-pais="mx">🇲🇽 México</a></li>
-                        <li><a href="index.html?pais=co" class="nav-link" data-pais="co">🇨🇴 Colombia</a></li>
-                        <li><a href="index.html?pais=cl" class="nav-link" data-pais="cl">🇨🇱 Chile</a></li>
-                        <li><a href="index.html?pais=pe" class="nav-link" data-pais="pe">🇵🇪 Perú</a></li>
-                        <li><a href="index.html?pais=py" class="nav-link" data-pais="py">🇵🇾 Paraguay</a></li>
-                    </ul>
-                </li>
-                <li><a href="sobre-nosotros.html" class="nav-link" data-categoria="sobre-nosotros">Sobre Nosotros</a></li>
-                <li><a href="contacto.html" class="nav-link" data-categoria="contacto">Contacto</a></li>
-            </ul>
-
-            <button id="menu-toggle" class="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </button>
-        </nav>
-    </header>
-
-    <div id="mobile-menu" class="mobile-menu">
-        <button id="menu-close" class="menu-close">&times;</button>
+    <nav class="container">
+        <a href="index.html" class="logo">Noticias.lat</a>
         
-        <a href="index.html?categoria=todos" class="nav-link" data-categoria="todos">General (Todo)</a>
+        <ul class="nav-links desktop-menu">
+            <li><a href="index.html?categoria=todos" class="nav-link" data-categoria="todos">General</a></li>
+            <li><a href="index.html?categoria=politica" class="nav-link" data-categoria="politica">Política</a></li>
+            <li><a href="index.html?categoria=economia" class="nav-link" data-categoria="economia">Economía</a></li>
+            <li><a href="index.html?categoria=deportes" class="nav-link" data-categoria="deportes">Deportes</a></li>
+            <li><a href="index.html?categoria=tecnologia" class="nav-link" data-categoria="tecnologia">Tecnología</a></li>
+            <li><a href="index.html?categoria=entretenimiento" class="nav-link" data-categoria="entretenimiento">Show</a></li>
+            <li><a href="index.html?categoria=salud" class="nav-link" data-categoria="salud">Salud</a></li>
+            <li><a href="index.html?categoria=internacional" class="nav-link" data-categoria="internacional">Mundo</a></li>
+            
+            <li class="dropdown">
+                <a href="#" class="nav-link">Países <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="index.html?pais=ar" class="nav-link" data-pais="ar">🇦🇷 Argentina</a></li>
+                    <li><a href="index.html?pais=bo" class="nav-link" data-pais="bo">🇧🇴 Bolivia</a></li>
+                    <li><a href="index.html?pais=br" class="nav-link" data-pais="br">🇧🇷 Brasil</a></li>
+                    <li><a href="index.html?pais=cl" class="nav-link" data-pais="cl">🇨🇱 Chile</a></li>
+                    <li><a href="index.html?pais=co" class="nav-link" data-pais="co">🇨🇴 Colombia</a></li>
+                    <li><a href="index.html?pais=cr" class="nav-link" data-pais="cr">🇨🇷 Costa Rica</a></li>
+                    <li><a href="index.html?pais=cu" class="nav-link" data-pais="cu">🇨🇺 Cuba</a></li>
+                    <li><a href="index.html?pais=ec" class="nav-link" data-pais="ec">🇪🇨 Ecuador</a></li>
+                    <li><a href="index.html?pais=sv" class="nav-link" data-pais="sv">🇸🇻 El Salvador</a></li>
+                    <li><a href="index.html?pais=gt" class="nav-link" data-pais="gt">🇬🇹 Guatemala</a></li>
+                    <li><a href="index.html?pais=hn" class="nav-link" data-pais="hn">🇭🇳 Honduras</a></li>
+                    <li><a href="index.html?pais=mx" class="nav-link" data-pais="mx">🇲🇽 México</a></li>
+                    <li><a href="index.html?pais=ni" class="nav-link" data-pais="ni">🇳🇮 Nicaragua</a></li>
+                    <li><a href="index.html?pais=pa" class="nav-link" data-pais="pa">🇵🇦 Panamá</a></li>
+                    <li><a href="index.html?pais=py" class="nav-link" data-pais="py">🇵🇾 Paraguay</a></li>
+                    <li><a href="index.html?pais=pe" class="nav-link" data-pais="pe">🇵🇪 Perú</a></li>
+                    <li><a href="index.html?pais=do" class="nav-link" data-pais="do">🇩🇴 Rep. Dominicana</a></li>
+                    <li><a href="index.html?pais=uy" class="nav-link" data-pais="uy">🇺🇾 Uruguay</a></li>
+                    <li><a href="index.html?pais=ve" class="nav-link" data-pais="ve">🇻🇪 Venezuela</a></li>
+                </ul>
+            </li>
+            <li><a href="sobre-nosotros.html" class="nav-link" data-categoria="sobre-nosotros">Nosotros</a></li>
+            <li><a href="contacto.html" class="nav-link" data-categoria="contacto">Contacto</a></li>
+        </ul>
+
+        <button id="menu-toggle" class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+</header>
+
+<div id="mobile-menu" class="mobile-menu">
+    <div class="mobile-menu-header">
+        <button id="menu-close" class="menu-close">&times;</button>
+    </div>
+    <div class="mobile-menu-content">
+        <a href="index.html?categoria=todos" class="nav-link" data-categoria="todos">General</a>
+        <a href="index.html?categoria=politica" class="nav-link" data-categoria="politica">Política</a>
+        <a href="index.html?categoria=economia" class="nav-link" data-categoria="economia">Economía</a>
         <a href="index.html?categoria=deportes" class="nav-link" data-categoria="deportes">Deportes</a>
         <a href="index.html?categoria=tecnologia" class="nav-link" data-categoria="tecnologia">Tecnología</a>
         <a href="index.html?categoria=entretenimiento" class="nav-link" data-categoria="entretenimiento">Show</a>
+        <a href="index.html?categoria=salud" class="nav-link" data-categoria="salud">Salud</a>
+        <a href="index.html?categoria=internacional" class="nav-link" data-categoria="internacional">Mundo</a>
         
         <hr>
         
         <a href="index.html?pais=ar" class="nav-link" data-pais="ar">🇦🇷 Argentina</a>
-        <a href="index.html?pais=mx" class="nav-link" data-pais="mx">🇲🇽 México</a>
-        <a href="index.html?pais=co" class="nav-link" data-pais="co">🇨🇴 Colombia</a>
+        <a href="index.html?pais=bo" class="nav-link" data-pais="bo">🇧🇴 Bolivia</a>
+        <a href="index.html?pais=br" class="nav-link" data-pais="br">🇧🇷 Brasil</a>
         <a href="index.html?pais=cl" class="nav-link" data-pais="cl">🇨🇱 Chile</a>
-        <a href="index.html?pais=pe" class="nav-link" data-pais="pe">🇵🇪 Perú</a>
+        <a href="index.html?pais=co" class="nav-link" data-pais="co">🇨🇴 Colombia</a>
+        <a href="index.html?pais=cr" class="nav-link" data-pais="cr">🇨🇷 Costa Rica</a>
+        <a href="index.html?pais=cu" class="nav-link" data-pais="cu">🇨🇺 Cuba</a>
+        <a href="index.html?pais=ec" class="nav-link" data-pais="ec">🇪🇨 Ecuador</a>
+        <a href="index.html?pais=sv" class="nav-link" data-pais="sv">🇸🇻 El Salvador</a>
+        <a href="index.html?pais=gt" class="nav-link" data-pais="gt">🇬🇹 Guatemala</a>
+        <a href="index.html?pais=hn" class="nav-link" data-pais="hn">🇭🇳 Honduras</a>
+        <a href="index.html?pais=mx" class="nav-link" data-pais="mx">🇲🇽 México</a>
+        <a href="index.html?pais=ni" class="nav-link" data-pais="ni">🇳🇮 Nicaragua</a>
+        <a href="index.html?pais=pa" class="nav-link" data-pais="pa">🇵🇦 Panamá</a>
         <a href="index.html?pais=py" class="nav-link" data-pais="py">🇵🇾 Paraguay</a>
+        <a href="index.html?pais=pe" class="nav-link" data-pais="pe">🇵🇪 Perú</a>
+        <a href="index.html?pais=do" class="nav-link" data-pais="do">🇩🇴 Rep. Dominicana</a>
+        <a href="index.html?pais=uy" class="nav-link" data-pais="uy">🇺🇾 Uruguay</a>
+        <a href="index.html?pais=ve" class="nav-link" data-pais="ve">🇻🇪 Venezuela</a>
         
         <hr>
         <a href="sobre-nosotros.html" class="nav-link" data-categoria="sobre-nosotros">Sobre Nosotros</a>
         <a href="contacto.html" class="nav-link" data-categoria="contacto">Contacto</a>
     </div>
+</div>
+
+<div id="overlay" class="overlay"></div>
 
     <main class="container">
         <div class="static-page-container">
@@ -74,18 +114,18 @@
             <p>Al acceder y utilizar Noticias.lat (el "Servicio"), usted acepta estar sujeto a estos Términos y Condiciones ("Términos"). Si no está de acuerdo con alguna parte de los términos, no podrá acceder al Servicio.</p>
 
             <h2>2. Contenido del Servicio</h2>
-            <p>El contenido que se muestra en este Servicio, incluidos, entre otros, artículos, texto, gráficos, imágenes y otra información ("Contenido"), se recopila de fuentes periodísticas públicas y API de terceros (como GNews). Este contenido se proporciona únicamente con fines informativos generales.</p>
-            <p>El contenido publicado es generado y curado por nuestra plataforma tecnológica para asegurar que reciba noticias concisas y detalladas de forma inmediata. No garantizamos la exactitud, integridad o utilidad de este Contenido. Cualquier confianza que deposite en dicho Contenido es estrictamente bajo su propio riesgo. Renunciamos a toda responsabilidad que surja de la confianza depositada en dicho Contenido por usted o cualquier otro visitante del Servicio, o por cualquier persona que pueda ser informada de su contenido.</p>
+            <p>El contenido que se muestra en este Servicio, incluidos, entre otros, artículos, texto, gráficos, imágenes y otra información ("Contenido"), se recopila de fuentes periodísticas públicas y API de terceros. Este contenido se procesa y enriquece mediante tecnología de inteligencia artificial para proporcionar artículos detallados.</p>
+            <p>El contenido se proporciona únicamente con fines informativos generales. No garantizamos la exactitud, integridad o utilidad de este Contenido. Cualquier confianza que deposite en dicho Contenido es estrictamente bajo su propio riesgo. Renunciamos a toda responsabilidad que surja de la confianza depositada en dicho Contenido.</p>
 
             <h2>3. Enlaces a Otros Sitios Web</h2>
-            <p>Nuestro Servicio contiene enlaces a sitios web o servicios de terceros que no son propiedad ni están controlados por Noticias.lat.</p>
-            <p>Noticias.lat no tiene control sobre el contenido, las políticas de privacidad o las prácticas de los sitios web o servicios de terceros, y no asume ninguna responsabilidad por ellos. Además, reconoce y acepta que Noticias.lat no será responsable, directa o indirectamente, de ningún daño o pérdida causada o presuntamente causada por o en conexión con el uso o la confianza en dicho contenido, bienes o servicios disponibles en o a través de dichos sitios web o servicios.</p>
+            <p>Nuestro Servicio contiene enlaces a sitios web o servicios de terceros (las "Fuentes Originales") que no son propiedad ni están controlados por Noticias.lat.</p>
+            <p>Noticias.lat no tiene control sobre el contenido, las políticas de privacidad o las prácticas de los sitios web o servicios de terceros, y no asume ninguna responsabilidad por ellos. Siempre damos crédito y enlazamos a la fuente original de la información.</p>
 
             <h2>4. Publicidad</h2>
             <p>Este Servicio se mantiene a través de la publicidad, incluido, entre otros, Google AdSense. Al utilizar este Servicio, usted acepta la visualización de dicha publicidad.</p>
 
             <h2>5. Limitación de Responsabilidad</h2>
-            <p>En ningún caso Noticias.lat, ni sus directores, empleados o socios, serán responsables de ningún daño indirecto, incidental, especial, consecuente o punitivo, incluidos, entre otros, la pérdida de beneficios, datos, uso, buena voluntad u otras pérdidas intangibles, que resulten de (i) su acceso o uso o incapacidad para acceder o utilizar el Servicio; (ii) cualquier contenido obtenido del Servicio.</p>
+            <p>En ningún caso Noticias.lat, ni sus directores, empleados o socios, serán responsables de ningún daño indirecto, incidental, especial, consecuente o punitivo, que resulten de (i) su acceso o uso o incapacidad para acceder o utilizar el Servicio; (ii) cualquier contenido obtenido del Servicio.</p>
 
             <h2>6. Cambios a los Términos</h2>
             <p>Nos reservamos el derecho, a nuestra entera discreción, de modificar o reemplazar estos Términos en cualquier momento. Le notificaremos cualquier cambio publicando los nuevos Términos en esta página.</p>
@@ -95,32 +135,35 @@
         </div>
     </main>
 
-    <footer class="main-footer">
-        <div class="container footer-content">
-            <div class="footer-section about">
-                <h3>Noticias.lat</h3>
-                <p>El portal de noticias líder de la red LFAF Tech, comprometido con la información veraz y al instante.</p>
-            </div>
-            <div class="footer-section links">
-                <h4>Enlaces Rápidos</h4>
-                <ul>
-                    <li><a href="index.html?categoria=todos">Última Hora</a></li>
-                    <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
-                    <li><a href="contacto.html">Contacto</a></li>
-                </ul>
-            </div>
-            <div class="footer-section links-legal">
-                <h4>Legal</h4>
-                <ul>
-                    <li><a href="politica-privacidad.html">Política de Privacidad</a></li>
-                    <li><a href="terminos.html">Términos y Condiciones</a></li>
-                </ul>
-            </div>
+<footer class="main-footer">
+    <div class="container footer-content">
+        <div class="footer-section about">
+            <h3>Noticias.lat</h3>
+            <p>El portal de noticias líder de la red LFAF Tech, comprometido con la información veraz y al instante.</p>
         </div>
-        <div class="footer-bottom">
-            &copy; 2024 Noticias.lat | Una plataforma de <a href="https://lfaftech.com" target="_blank">LFAF Tech</a>
+        <div class="footer-section links">
+            <h4>Enlaces Rápidos</h4>
+            <ul>
+                <li><a href="index.html?categoria=todos">Última Hora</a></li>
+                <li><a href="index.html?categoria=deportes">Deportes</a></li>
+                <li><a href="index.html?categoria=politica">Política</a></li>
+                <li><a href="index.html?categoria=economia">Economía</a></li>
+            </ul>
         </div>
-    </footer>
+        <div class="footer-section links-legal">
+            <h4>Legal</h4>
+            <ul>
+                <li><a href="politica-privacidad.html">Política de Privacidad</a></li>
+                <li><a href="terminos.html">Términos y Condiciones</a></li>
+                <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2024 Noticias.lat | Una plataforma de <a href="https://lfaftech.com" target="_blank">LFAF Tech</a>
+    </div>
+</footer>
 
 </body>
 </html>

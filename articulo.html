@@ -6,117 +6,164 @@
     
     <title>Cargando artículo... - Noticias.lat</title> 
     
-    <link rel="canonical" href="URL_DEL_ARTICULO">
+    <meta name="description" content="Las noticias más importantes de Latinoamérica." id="meta-description" />
+    <link rel="canonical" href="URL_DEL_ARTICULO" id="canonical-link">
     
     <meta property="og:title" content="Cargando artículo..." id="og-title" />
     <meta property="og:description" content="Las noticias más importantes de Latinoamérica." id="og-description" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="URL_DEL_ARTICULO" id="og-url" />
-    <meta property="og:image" content="IMAGEN_PREDETERMINADA.jpg" id="og-image" />
+    <meta property="og:image" content="images/placeholder.jpg" id="og-image" />
     <meta property="og:site_name" content="Noticias.lat" />
     
     <link rel="stylesheet" href="style.css">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     
+    <script src="app.js" defer></script> 
     <script src="articulo.js" defer></script>
 </head>
 <body>
 
 <header class="main-header">
-        <nav class="container">
-            <a href="index.html" class="logo">Noticias.lat</a>
-            
-            <ul class="nav-links desktop-menu">
-                <li><a href="index.html?categoria=todos" class="nav-link" data-categoria="todos">General</a></li>
-                <li><a href="index.html?categoria=deportes" class="nav-link" data-categoria="deportes">Deportes</a></li>
-                <li><a href="index.html?categoria=tecnologia" class="nav-link" data-categoria="tecnologia">Tecnología</a></li>
-                <li><a href="index.html?categoria=entretenimiento" class="nav-link" data-categoria="entretenimiento">Show</a></li>
-                
-                <li class="dropdown">
-                    <a href="#" class="nav-link">Países <i class="fas fa-chevron-down"></i></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="index.html?pais=ar" class="nav-link" data-pais="ar">🇦🇷 Argentina</a></li>
-                        <li><a href="index.html?pais=mx" class="nav-link" data-pais="mx">🇲🇽 México</a></li>
-                        <li><a href="index.html?pais=co" class="nav-link" data-pais="co">🇨🇴 Colombia</a></li>
-                        <li><a href="index.html?pais=cl" class="nav-link" data-pais="cl">🇨🇱 Chile</a></li>
-                        <li><a href="index.html?pais=pe" class="nav-link" data-pais="pe">🇵🇪 Perú</a></li>
-                        <li><a href="index.html?pais=py" class="nav-link" data-pais="py">🇵🇾 Paraguay</a></li>
-                    </ul>
-                </li>
-                <li><a href="sobre-nosotros.html" class="nav-link" data-categoria="sobre-nosotros">Sobre Nosotros</a></li>
-                <li><a href="contacto.html" class="nav-link" data-categoria="contacto">Contacto</a></li>
-            </ul>
-
-            <button id="menu-toggle" class="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </button>
-        </nav>
-    </header>
-
-    <div id="mobile-menu" class="mobile-menu">
-        <button id="menu-close" class="menu-close">&times;</button>
+    <nav class="container">
+        <a href="index.html" class="logo">Noticias.lat</a>
         
-        <a href="index.html?categoria=todos" class="nav-link" data-categoria="todos">General (Todo)</a>
+        <ul class="nav-links desktop-menu">
+            <li><a href="index.html?categoria=todos" class="nav-link" data-categoria="todos">General</a></li>
+            <li><a href="index.html?categoria=politica" class="nav-link" data-categoria="politica">Política</a></li>
+            <li><a href="index.html?categoria=economia" class="nav-link" data-categoria="economia">Economía</a></li>
+            <li><a href="index.html?categoria=deportes" class="nav-link" data-categoria="deportes">Deportes</a></li>
+            <li><a href="index.html?categoria=tecnologia" class="nav-link" data-categoria="tecnologia">Tecnología</a></li>
+            <li><a href="index.html?categoria=entretenimiento" class="nav-link" data-categoria="entretenimiento">Show</a></li>
+            <li><a href="index.html?categoria=salud" class="nav-link" data-categoria="salud">Salud</a></li>
+            <li><a href="index.html?categoria=internacional" class="nav-link" data-categoria="internacional">Mundo</a></li>
+            
+            <li class="dropdown">
+                <a href="#" class="nav-link">Países <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="index.html?pais=ar" class="nav-link" data-pais="ar">🇦🇷 Argentina</a></li>
+                    <li><a href="index.html?pais=bo" class="nav-link" data-pais="bo">🇧🇴 Bolivia</a></li>
+                    <li><a href="index.html?pais=br" class="nav-link" data-pais="br">🇧🇷 Brasil</a></li>
+                    <li><a href="index.html?pais=cl" class="nav-link" data-pais="cl">🇨🇱 Chile</a></li>
+                    <li><a href="index.html?pais=co" class="nav-link" data-pais="co">🇨🇴 Colombia</a></li>
+                    <li><a href="index.html?pais=cr" class="nav-link" data-pais="cr">🇨🇷 Costa Rica</a></li>
+                    <li><a href="index.html?pais=cu" class="nav-link" data-pais="cu">🇨🇺 Cuba</a></li>
+                    <li><a href="index.html?pais=ec" class="nav-link" data-pais="ec">🇪🇨 Ecuador</a></li>
+                    <li><a href="index.html?pais=sv" class="nav-link" data-pais="sv">🇸🇻 El Salvador</a></li>
+                    <li><a href="index.html?pais=gt" class="nav-link" data-pais="gt">🇬🇹 Guatemala</a></li>
+                    <li><a href="index.html?pais=hn" class="nav-link" data-pais="hn">🇭🇳 Honduras</a></li>
+                    <li><a href="index.html?pais=mx" class="nav-link" data-pais="mx">🇲🇽 México</a></li>
+                    <li><a href="index.html?pais=ni" class="nav-link" data-pais="ni">🇳🇮 Nicaragua</a></li>
+                    <li><a href="index.html?pais=pa" class="nav-link" data-pais="pa">🇵🇦 Panamá</a></li>
+                    <li><a href="index.html?pais=py" class="nav-link" data-pais="py">🇵🇾 Paraguay</a></li>
+                    <li><a href="index.html?pais=pe" class="nav-link" data-pais="pe">🇵🇪 Perú</a></li>
+                    <li><a href="index.html?pais=do" class="nav-link" data-pais="do">🇩🇴 Rep. Dominicana</a></li>
+                    <li><a href="index.html?pais=uy" class="nav-link" data-pais="uy">🇺🇾 Uruguay</a></li>
+                    <li><a href="index.html?pais=ve" class="nav-link" data-pais="ve">🇻🇪 Venezuela</a></li>
+                </ul>
+            </li>
+            <li><a href="sobre-nosotros.html" class="nav-link" data-categoria="sobre-nosotros">Nosotros</a></li>
+            <li><a href="contacto.html" class="nav-link" data-categoria="contacto">Contacto</a></li>
+        </ul>
+
+        <button id="menu-toggle" class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+</header>
+
+<div id="mobile-menu" class="mobile-menu">
+    <div class="mobile-menu-header">
+        <button id="menu-close" class="menu-close">&times;</button>
+    </div>
+    <div class="mobile-menu-content">
+        <a href="index.html?categoria=todos" class="nav-link" data-categoria="todos">General</a>
+        <a href="index.html?categoria=politica" class="nav-link" data-categoria="politica">Política</a>
+        <a href="index.html?categoria=economia" class="nav-link" data-categoria="economia">Economía</a>
         <a href="index.html?categoria=deportes" class="nav-link" data-categoria="deportes">Deportes</a>
         <a href="index.html?categoria=tecnologia" class="nav-link" data-categoria="tecnologia">Tecnología</a>
         <a href="index.html?categoria=entretenimiento" class="nav-link" data-categoria="entretenimiento">Show</a>
+        <a href="index.html?categoria=salud" class="nav-link" data-categoria="salud">Salud</a>
+        <a href="index.html?categoria=internacional" class="nav-link" data-categoria="internacional">Mundo</a>
         
         <hr>
         
         <a href="index.html?pais=ar" class="nav-link" data-pais="ar">🇦🇷 Argentina</a>
-        <a href="index.html?pais=mx" class="nav-link" data-pais="mx">🇲🇽 México</a>
-        <a href="index.html?pais=co" class="nav-link" data-pais="co">🇨🇴 Colombia</a>
+        <a href="index.html?pais=bo" class="nav-link" data-pais="bo">🇧🇴 Bolivia</a>
+        <a href="index.html?pais=br" class="nav-link" data-pais="br">🇧🇷 Brasil</a>
         <a href="index.html?pais=cl" class="nav-link" data-pais="cl">🇨🇱 Chile</a>
-        <a href="index.html?pais=pe" class="nav-link" data-pais="pe">🇵🇪 Perú</a>
+        <a href="index.html?pais=co" class="nav-link" data-pais="co">🇨🇴 Colombia</a>
+        <a href="index.html?pais=cr" class="nav-link" data-pais="cr">🇨🇷 Costa Rica</a>
+        <a href="index.html?pais=cu" class="nav-link" data-pais="cu">🇨🇺 Cuba</a>
+        <a href="index.html?pais=ec" class="nav-link" data-pais="ec">🇪🇨 Ecuador</a>
+        <a href="index.html?pais=sv" class="nav-link" data-pais="sv">🇸🇻 El Salvador</a>
+        <a href="index.html?pais=gt" class="nav-link" data-pais="gt">🇬🇹 Guatemala</a>
+        <a href="index.html?pais=hn" class="nav-link" data-pais="hn">🇭🇳 Honduras</a>
+        <a href="index.html?pais=mx" class="nav-link" data-pais="mx">🇲🇽 México</a>
+        <a href="index.html?pais=ni" class="nav-link" data-pais="ni">🇳🇮 Nicaragua</a>
+        <a href="index.html?pais=pa" class="nav-link" data-pais="pa">🇵🇦 Panamá</a>
         <a href="index.html?pais=py" class="nav-link" data-pais="py">🇵🇾 Paraguay</a>
+        <a href="index.html?pais=pe" class="nav-link" data-pais="pe">🇵🇪 Perú</a>
+        <a href="index.html?pais=do" class="nav-link" data-pais="do">🇩🇴 Rep. Dominicana</a>
+        <a href="index.html?pais=uy" class="nav-link" data-pais="uy">🇺🇾 Uruguay</a>
+        <a href="index.html?pais=ve" class="nav-link" data-pais="ve">🇻🇪 Venezuela</a>
         
         <hr>
         <a href="sobre-nosotros.html" class="nav-link" data-categoria="sobre-nosotros">Sobre Nosotros</a>
         <a href="contacto.html" class="nav-link" data-categoria="contacto">Contacto</a>
     </div>
+</div>
 
-    <main class="container">
-        <div id="article-content" class="article-page-container">
-            <div id="loading-message" class="loader-container">
-                <div class="loader"></div>
-                <p style="margin-top: 1rem; color: var(--color-texto-secundario);">Cargando artículo...</p>
-            </div>
+<div id="overlay" class="overlay"></div>
+
+<main class="container">
+    
+    <div id="article-content" class="article-page-container">
+        <div id="loading-message" class="loader-container">
+            <div class="loader"></div>
+            <p style="margin-top: 1rem; color: var(--color-texto-secundario);">Cargando artículo...</p>
         </div>
-
-        <section id="recommended-section" class="main-content" style="display: none;">
-            <h2>Artículos Recomendados</h2>
-            <div id="recommended-container" class="articles-container-mini">
-                </div>
-        </section>
         
-    </main>
+        </div>
 
-    <footer class="main-footer">
-        <div class="container footer-content">
-            <div class="footer-section about">
-                <h3>Noticias.lat</h3>
-                <p>El portal de noticias líder de la red LFAF Tech, comprometido con la información veraz y al instante.</p>
+    <section id="recommended-section" class="main-content" style="display: none; padding-top: 1rem;">
+        <h2>Artículos Recomendados</h2>
+        <div id="recommended-container" class="articles-container-mini">
             </div>
-            <div class="footer-section links">
-                <h4>Enlaces Rápidos</h4>
-                <ul>
-                    <li><a href="index.html?categoria=todos">Última Hora</a></li>
-                    <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
-                    <li><a href="contacto.html">Contacto</a></li>
-                </ul>
-            </div>
-            <div class="footer-section links-legal">
-                <h4>Legal</h4>
-                <ul>
-                    <li><a href="politica-privacidad.html">Política de Privacidad</a></li>
-                    <li><a href="terminos.html">Términos y Condiciones</a></li>
-                </ul>
-            </div>
+    </section>
+    
+</main>
+
+<footer class="main-footer">
+    <div class="container footer-content">
+        <div class="footer-section about">
+            <h3>Noticias.lat</h3>
+            <p>El portal de noticias líder de la red LFAF Tech, comprometido con la información veraz y al instante.</p>
         </div>
-        <div class="footer-bottom">
-            &copy; 2024 Noticias.lat | Una plataforma de <a href="https://lfaftech.com" target="_blank">LFAF Tech</a>
+        <div class="footer-section links">
+            <h4>Enlaces Rápidos</h4>
+            <ul>
+                <li><a href="index.html?categoria=todos">Última Hora</a></li>
+                <li><a href="index.html?categoria=deportes">Deportes</a></li>
+                <li><a href="index.html?categoria=politica">Política</a></li>
+                <li><a href="index.html?categoria=economia">Economía</a></li>
+            </ul>
         </div>
-    </footer>
+        <div class="footer-section links-legal">
+            <h4>Legal</h4>
+            <ul>
+                <li><a href="politica-privacidad.html">Política de Privacidad</a></li>
+                <li><a href="terminos.html">Términos y Condiciones</a></li>
+                <li><a href="sobre-nosotros.html">Sobre Nosotros</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2024 Noticias.lat | Una plataforma de <a href="https://lfaftech.com" target="_blank">LFAF Tech</a>
+    </div>
+</footer>
 
 </body>
 </html>
