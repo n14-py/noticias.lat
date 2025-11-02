@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const articleContainer = document.getElementById('article-content');
     const loadingMessage = document.getElementById('loading-message');
     
-    // Detener si no estamos en articulo.html
     if (!articleContainer) {
         return; 
     }
@@ -20,6 +19,22 @@ document.addEventListener('DOMContentLoaded', () => {
     function formatDate(dateString) {
         const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
         return new Date(dateString).toLocaleDateString('es-ES', options);
+    }
+
+    // ¡NUEVA FUNCIÓN PARA CREAR BOTONES DE COMPARTIR!
+    function createShareButtons(url, title) {
+        const encodedUrl = encodeURIComponent(url);
+        const encodedTitle = encodeURIComponent(title);
+
+        return `
+            <div class="share-buttons">
+                <h4>Compartir esta noticia:</h4>
+                <a href="https://api.whatsapp.com/send?text=${encodedTitle}%20${encodedUrl}" class="share-btn whatsapp" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                <a href="https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}" class="share-btn twitter" target="_blank" rel="noopener"><i class="fab fa-twitter"></i> Twitter</a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}" class="share-btn facebook" target="_blank" rel="noopener"><i class="fab fa-facebook"></i> Facebook</a>
+                <a href="mailto:?subject=${encodedTitle}&body=Mira esta noticia:%20${encodedUrl}" class="share-btn email" target="_blank" rel="noopener"><i class="fas fa-envelope"></i> Email</a>
+            </div>
+        `;
     }
     
     async function fetchRecommended(sitio, categoria, excludeId) {
@@ -82,63 +97,45 @@ document.addEventListener('DOMContentLoaded', () => {
             const descriptionSnippet = (article.descripcion || 'Sin descripción').substring(0, 150) + '...';
             const imageUrl = article.imagen || PLACEHOLDER_IMG;
             
-            // 1. Título de la pestaña
             document.title = `${article.titulo} - Noticias.lat`;
             
-            // 2. Meta Descripción (Para SEO)
             let metaDescription = document.getElementById('meta-description');
-            if (metaDescription) {
-                 metaDescription.setAttribute('content', descriptionSnippet);
-            }
+            if (metaDescription) metaDescription.setAttribute('content', descriptionSnippet);
 
-            // 3. Etiquetas Open Graph (Para redes sociales)
             document.getElementById('og-title').setAttribute('content', article.titulo);
             document.getElementById('og-description').setAttribute('content', descriptionSnippet);
             document.getElementById('og-url').setAttribute('content', currentUrl);
             document.getElementById('og-image').setAttribute('content', imageUrl);
 
-            // 4. Link Canónico (Para evitar contenido duplicado en SEO)
             const canonicalLink = document.getElementById('canonical-link');
-            if (canonicalLink) {
-                 canonicalLink.setAttribute('href', currentUrl);
-            }
+            if (canonicalLink) canonicalLink.setAttribute('href', currentUrl);
 
             // ===========================================
-            // --- 2. ¡NUEVO! DATOS ESTRUCTURADOS (SCHEMA.ORG) ---
+            // --- 2. DATOS ESTRUCTURADOS (SCHEMA.ORG) ---
             // ===========================================
             
-            // Eliminar el schema anterior si existe (para navegación SPA, si se implementa)
             const oldSchema = document.getElementById('article-schema');
-            if (oldSchema) {
-                oldSchema.remove();
-            }
+            if (oldSchema) oldSchema.remove();
 
-            // Crear el objeto Schema
             const schema = {
                 "@context": "https://schema.org",
                 "@type": "NewsArticle",
                 "headline": article.titulo,
-                "image": [
-                    imageUrl // Usa la imagen con placeholder
-                 ],
-                "datePublished": article.fecha, // Fecha de creación
-                "dateModified": article.updatedAt || article.fecha, // Fecha de actualización (o creación)
-                "author": [{
-                    "@type": "Organization",
-                    "name": "Noticias.lat"
-                }],
+                "image": [ imageUrl ],
+                "datePublished": article.fecha,
+                "dateModified": article.updatedAt || article.fecha,
+                "author": [{"@type": "Organization", "name": "Noticias.lat"}],
                 "publisher": {
                     "@type": "Organization",
                     "name": "Noticias.lat",
                     "logo": {
                         "@type": "ImageObject",
-                        "url": "https.www.noticias.lat/favicon.png" // URL del logo/favicon
+                        "url": "https://www.noticias.lat/favicon.png"
                     }
                 },
                 "description": descriptionSnippet
             };
 
-            // Crear la etiqueta script y añadirla al <head>
             const schemaScript = document.createElement('script');
             schemaScript.type = 'application/ld+json';
             schemaScript.id = 'article-schema';
@@ -152,7 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
             let contenidoPrincipalHTML = '';
 
             if (article.articuloGenerado) {
-                // Limpieza y conversión a párrafos
                 const textoLimpio = article.articuloGenerado
                     .replace(/##\s/g, '')       
                     .replace(/\*\*/g, '')      
@@ -165,23 +161,39 @@ document.addEventListener('DOMContentLoaded', () => {
                     .map(p => `<p>${p}</p>`)      
                     .join('');                   
             } else {
-                // Fallback
                 const contenidoLimpio = article.contenido ? article.contenido.split(' [')[0] : (article.descripcion || 'Contenido no disponible.');
                 contenidoPrincipalHTML = `
                     <p>${contenidoLimpio}</p>
-                    <p><em>(Esta noticia no pudo ser procesada por nuestro reportero. Mostrando descripción breve.)</em></p>
+                    <p><em>(Mostrando descripción breve.)</em></p>
                 `;
             }
 
-            // --- HTML FINAL (Usando la estructura Article Page) ---
-            const mainImageUrl = article.imagen || PLACEHOLDER_IMG;
+            // --- ¡NUEVO! HTML FINAL CON AD SLOTS Y BOTONES DE COMPARTIR ---
             
+            const mainImageUrl = article.imagen || PLACEHOLDER_IMG;
+            const shareButtonsHTML = createShareButtons(currentUrl, article.titulo);
+            
+            // (Una vez aprobado en AdSense, aquí pegarás el código de tu bloque de anuncios)
+            const adSlotTopBanner = `
+                <div classT="ad-slot-placeholder">
+                    <p>Publicidad</p>
+                </div>
+            `;
+            
+            const adSlotBottom = `
+                <div class="ad-slot-placeholder" style="min-height: 250px;">
+                    <p>Publicidad</p>
+                </div>
+            `;
+
             articleContainer.innerHTML = `
                 <h1>${article.titulo}</h1>
-                <p class="article-meta">
+                
+                ${adSlotTopBanner} <p class="article-meta">
                     Publicado el: ${formatDate(article.fecha)} | Fuente: ${article.fuente}
                 </p>
-                <img src="${mainImageUrl}" alt="${article.titulo}" class="article-main-image" 
+                
+                ${shareButtonsHTML} <img src="${mainImageUrl}" alt="${article.titulo}" class="article-main-image" 
                      onerror="this.onerror=null;this.src='${PLACEHOLDER_IMG}';">
 
                 <div class="article-body">
@@ -194,7 +206,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         Leer en ${article.fuente}
                     </a>
                 </div>
-            `;
+                
+                ${adSlotBottom} `;
             
             // --- 4. LLAMAR A RECOMENDADOS ---
             fetchRecommended(article.sitio, article.categoria, article._id);
